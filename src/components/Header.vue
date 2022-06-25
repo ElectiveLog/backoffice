@@ -1,7 +1,10 @@
 <template>
   <div class="header">
     <div class="container">
-      <router-link to="/"
+      <router-link v-if="!currentUser" to="/"
+        ><img class="logo" src="../../dist/assets/logo.png" alt="CES'EATS LOGO"
+      /></router-link>
+      <router-link v-if="currentUser" to="/home"
         ><img class="logo" src="../../dist/assets/logo.png" alt="CES'EATS LOGO"
       /></router-link>
       <div class="header-right">
@@ -15,11 +18,6 @@
           Déconnexion
         </button>
 
-        <router-link v-if="!currentUser" to="/register"
-          ><button class="grey_button styled_button" type="button">
-            Inscription
-          </button></router-link
-        >
         &emsp;
         <router-link v-if="!currentUser" to="/login"
           ><button class="grey_button styled_button" type="button">
@@ -27,22 +25,21 @@
           </button></router-link
         >
         &emsp;
-        <router-link to="/statistics"
-          ><button class="cleargreen_button styled_button" type="button">
-            Statistiques
-            <b-icon-bar-chart-line-fill
-              class="icon"
-            ></b-icon-bar-chart-line-fill></button
-        ></router-link>
+        <router-link v-if="currentUser" to="/statistics">
+          <button class="grey_button styled_button" type="button">
+            Utilisateurs
+          </button>
+        </router-link>
         <a> &emsp;</a>
-        <router-link v-if="currentUser" to="/account"
-          ><button class="blue_button styled_button" type="button">
+        <router-link v-if="currentUser" to="/account">
+          <button class="blue_button styled_button" type="button">
             Compte
-            <b-icon-person-fill class="icon"></b-icon-person-fill></button
-        ></router-link>
+            <b-icon-person-fill class="icon"></b-icon-person-fill>
+          </button>
+        </router-link>
         <a> &emsp;</a>
-        <router-link to="/cart"
-          ><button class="grey_button styled_button" type="button">
+        <router-link to="/cart">
+          <button class="grey_button styled_button" type="button">
             Panier
             <b-icon-cart-fill class="icon"></b-icon-cart-fill>&ensp;<span>{{
               orders
@@ -63,14 +60,14 @@ export default {
     },
     currentUser() {
       return this.$store.state.auth.user;
-    }
+    },
   },
   methods: {
     logOut() {
       this.$store.dispatch("auth/logout");
-      this.$router.push("/login");
-    }
-  }
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
