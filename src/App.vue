@@ -11,29 +11,27 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import data from "@/data.json";
+import { mapMutations } from 'vuex';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Header,
-    Footer
+    Footer,
   },
   created() {
     document.title = "CES'EATS";
-    this.setPlaces(data);
   },
   methods: {
-    ...mapMutations(["setPlaces"])
-  }
+    ...mapMutations(['setPlaces']),
+  },
 };
 </script>
 
 <style>
-@import "../style/style.css";
-@import url("https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500&display=swap");
-@import "~bootstrap/dist/css/bootstrap.css";
+@import '../style/style.css';
+@import url('https://fonts.googleapis.com/css2?family=Anek+Latin:wght@500&display=swap');
+@import '~bootstrap/dist/css/bootstrap.css';
 </style>

@@ -44,8 +44,9 @@
                     v-for="role in roledata"
                     :key="role.id"
                     :value="role.id"
-                    >{{ role.name }}</option
                   >
+                    {{ role.name }}
+                  </option>
                 </select>
 
                 <div class="valid-feedback">Choix valide</div>
@@ -91,34 +92,34 @@
   </div>
 </template>
 <script>
-import User from "../models/user";
+import User from '../models/user';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Register",
+  name: 'Register',
   data() {
     return {
-      user: new User("", "", "", ""),
+      user: new User('', '', '', ''),
       submitted: false,
       successful: false,
-      message: "",
-      roledata: []
+      message: '',
+      roledata: [],
     };
   },
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
-    }
+    },
   },
   created() {
-    var axios = require("axios");
+    var axios = require('axios');
 
     var config = {
-      method: "get",
-      url: "http://localhost:8080/roles/",
+      method: 'get',
+      url: 'http://localhost:5000/roles/',
       headers: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTU3NTg3MjUsImV4cCI6MTY1NjM2MzUyNX0.vHdiEc98ELrbBDbeZeG-851qS_SLSHJW8HDJX7mPgjs"
-      }
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTU3NTg3MjUsImV4cCI6MTY1NjM2MzUyNX0.vHdiEc98ELrbBDbeZeG-851qS_SLSHJW8HDJX7mPgjs',
+      },
     };
 
     axios(config)
@@ -126,36 +127,36 @@ export default {
         this.roledata = response.data;
       })
       .catch(error => {
-        console.log("fdsqf" + error);
+        console.log('fdsqf' + error);
       });
   },
   mounted() {
     if (this.loggedIn) {
-      this.$router.push("/");
+      this.$router.push('/');
     }
   },
 
   methods: {
     handleRegister() {
-      this.message = "";
+      this.message = '';
       this.submitted = true;
 
-      this.$store.dispatch("auth/register", this.user).then(
+      this.$store.dispatch('auth/register', this.user).then(
         data => {
           this.message = data.message;
           this.successful = true;
           this.$notify({
-            group: "foo",
-            title: "Inscription réussie",
-            type: "success",
+            group: 'foo',
+            title: 'Inscription réussie',
+            type: 'success',
             text:
-              "Bienvenue " +
+              'Bienvenue ' +
               this.user.email +
-              " !" +
-              "Vous pouvez vous connecter.",
-            duration: 8000
+              ' !' +
+              'Vous pouvez vous connecter.',
+            duration: 8000,
           });
-          this.$router.push("/login");
+          this.$router.push('/login');
         },
         error => {
           this.message =
@@ -165,8 +166,8 @@ export default {
           this.successful = false;
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
