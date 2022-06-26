@@ -9,7 +9,7 @@
       id="my-table"
       striped
       hover
-      :items="logs"
+      :items="users"
       :fields="column"
       :per-page="perPage"
       :current-page="currentPage"
@@ -35,7 +35,7 @@ var axios = require('axios');
 const user = JSON.parse(localStorage.getItem('user'));
 
 export default {
-  name: 'LogsList',
+  name: 'UserList',
   components: {},
   data() {
     return {
@@ -43,19 +43,23 @@ export default {
       perPage: 10,
       currentPage: 1,
       filter: '',
-      logs: [],
+      users: [],
       column: [
         {
-          key: 'Type',
-          label: 'Type',
+          key: 'Name',
+          label: 'Name',
         },
         {
-          key: 'Description',
-          label: 'Description',
+          key: 'Email',
+          label: 'Email',
         },
         {
-          key: 'Date',
-          label: 'Date',
+          key: 'Adresse',
+          label: 'Adresse',
+        },
+        {
+          key: 'Role',
+          label: 'Role',
         },
         {
           key: 'Heure',
@@ -66,7 +70,7 @@ export default {
   },
   computed: {
     rows() {
-      return this.logs.length;
+      return this.users.length;
     },
   },
   methods: {
@@ -77,19 +81,22 @@ export default {
   async created() {
     var config = {
       method: 'get',
-      url: 'http://localhost:3000/api/logs/',
+      url: 'http://localhost:5000/users/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
     };
     await axios(config)
       .then(response => {
-        response.data.logs.forEach(log => {
-          this.logs.push({
-            Type: log.type,
-            Description: log.description,
-            Date: log.createdAt.split('T')[0],
-            Heure: log.createdAt
+        console.log(response);
+        response.data.forEach(user => {
+          this.users.push({
+            Name: user.name,
+            Email: user.email,
+            Adresse: user.address,
+            Role: user.roleId,
+            Date: user.createdAt.split('T')[0],
+            Heure: user.createdAt
               .split('T')
               .pop()
               .split('.')[0],

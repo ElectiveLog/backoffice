@@ -152,11 +152,11 @@ a {
 
 <script>
 export default {
-  name: "Footer",
+  name: 'Footer',
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
-    }
-  }
+    },
+  },
 };
 </script>

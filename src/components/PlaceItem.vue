@@ -10,30 +10,30 @@
 
 <script>
 export default {
-  name: "PlaceItem",
+  name: 'PlaceItem',
   props: {
     id: {
       type: Number,
-      default: null
+      default: null,
     },
     title: {
       type: String,
-      default: ""
+      default: '',
     },
     category: {
       type: String,
-      default: ""
+      default: '',
     },
     img: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
-    }
-  }
+    },
+  },
 };
 </script>
 

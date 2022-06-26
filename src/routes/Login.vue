@@ -62,15 +62,15 @@
   </div>
 </template>
 <script>
-import User from "../models/user";
+import User from '../models/user';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Login",
+  name: 'Login',
   data() {
     return {
-      user: new User("", ""),
+      user: new User('', ''),
       loading: false,
-      message: "",
+      message: '',
     };
   },
   computed: {
@@ -80,43 +80,43 @@ export default {
     },
   },
   created() {
-    var axios = require("axios");
+    var axios = require('axios');
 
     var config = {
-      method: "get",
-      url: "http://localhost:3000/api/ingredients/",
+      method: 'get',
+      url: 'http://localhost:3000/api/ingredients/',
       headers: {
-        "X-Server-Select": "mongo",
+        'X-Server-Select': 'mongo',
       },
     };
 
     axios(config)
-      .then(function (response) {
+      .then(function(response) {
         console.log(JSON.stringify(response.data));
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
 
     if (this.loggedIn) {
-      this.$router.push("/");
+      this.$router.push('/');
     }
   },
   methods: {
     handleLogin() {
-      console.log("handleLogin");
+      console.log('handleLogin');
       this.loading = true;
 
       if (this.user.email && this.user.password) {
-        console.log("handleLogin: login");
-        this.$store.dispatch("auth/login", this.user).then(
-          (response) => {
-            console.log("fdsq" + JSON.stringify(response));
+        console.log('handleLogin: login');
+        this.$store.dispatch('auth/login', this.user).then(
+          response => {
+            console.log('fdsq' + JSON.stringify(response));
             if (response.status == 203) {
               this.$notify({
-                group: "foo",
-                title: "Erreur",
-                type: "error",
+                group: 'foo',
+                title: 'Erreur',
+                type: 'error',
                 text: response.data,
                 duration: 8000,
               });
@@ -124,16 +124,16 @@ export default {
               this.message = response;
             } else {
               this.$notify({
-                group: "foo",
-                title: "Connexion réussie",
-                type: "success",
-                text: "Bienvenue " + this.user.email,
+                group: 'foo',
+                title: 'Connexion réussie',
+                type: 'success',
+                text: 'Bienvenue ' + this.user.email,
                 duration: 8000,
               });
-              this.$router.push("/home");
+              this.$router.push('/home');
             }
           },
-          (error) => {
+          error => {
             this.loading = false;
             this.message =
               (error.response && error.response.data) ||

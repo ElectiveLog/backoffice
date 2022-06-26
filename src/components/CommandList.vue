@@ -79,13 +79,11 @@ export default {
     },
   },
   async created() {
-    const payloadUser = this.decodeToken(user.accessToken);
-
     var configArticle = {
       method: 'get',
       url: 'http://localhost:3000/api/articles/',
       headers: {
-        Authorization: 'Bearer ' + payloadUser,
+        Authorization: 'Bearer ' + user.accessToken,
       },
     };
     await axios(configArticle).then(response => {
@@ -107,7 +105,7 @@ export default {
       method: 'get',
       url: 'http://localhost:3000/api/restaurants/',
       headers: {
-        Authorization: 'Bearer ' + payloadUser,
+        Authorization: 'Bearer ' + user.accessToken,
       },
     };
     await axios(configRestaurant).then(response => {
@@ -125,7 +123,7 @@ export default {
       method: 'get',
       url: 'http://localhost:3000/api/orders/',
       headers: {
-        Authorization: 'Bearer ' + payloadUser,
+        Authorization: 'Bearer ' + user.accessToken,
       },
     };
     await axios(config)

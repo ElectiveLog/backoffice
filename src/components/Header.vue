@@ -25,6 +25,7 @@
           <b-dropdown-item to="/commandes">Commandes</b-dropdown-item>
           <b-dropdown-item to="/logs">Logs</b-dropdown-item>
           <b-dropdown-item to="/components">Composants</b-dropdown-item>
+          <b-dropdown-item to="/users">Utilisateurs</b-dropdown-item>
           <b-dropdown-item @click.prevent="logOut">Deconnexion</b-dropdown-item>
         </b-dropdown>
       </div>

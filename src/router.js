@@ -9,6 +9,7 @@ import Account from '@/routes/Account.vue';
 import Log from '@/routes/Log.vue';
 import Components from '@/routes/Components.vue';
 import Commandes from '@/routes/Commandes.vue';
+import User from '@/routes/User.vue';
 
 Vue.use(Router);
 
@@ -65,6 +66,11 @@ export default new Router({
       path: '/logs',
       name: 'logs',
       component: Log,
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: User,
     },
     {
       path: '/:id',
