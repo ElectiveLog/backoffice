@@ -2,10 +2,10 @@
   <div class="header">
     <div class="container">
       <router-link v-if="!currentUser" to="/"
-        ><img class="logo" src="../../dist/assets/logo.png" alt="CES'EATS LOGO"
+        ><img class="logo" src="../../public/Logo.png" alt="CES'EATS LOGO"
       /></router-link>
       <router-link v-if="currentUser" to="/home"
-        ><img class="logo" src="../../dist/assets/logo.png" alt="CES'EATS LOGO"
+        ><img class="logo" src="../../public/Logo.png" alt="CES'EATS LOGO"
       /></router-link>
       <div class="header-right">
         &emsp;
@@ -26,6 +26,7 @@
           <b-dropdown-item to="/logs">Logs</b-dropdown-item>
           <b-dropdown-item to="/components">Composants</b-dropdown-item>
           <b-dropdown-item to="/users">Utilisateurs</b-dropdown-item>
+          <b-dropdown-item to="/performances">Performances</b-dropdown-item>
           <b-dropdown-item @click.prevent="logOut">Deconnexion</b-dropdown-item>
         </b-dropdown>
       </div>

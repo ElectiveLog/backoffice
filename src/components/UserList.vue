@@ -17,7 +17,14 @@
       borderred
       responsive
       primary-key
-    ></b-table>
+    >
+      <template v-slot:cell(edit)="{ item }">
+        <b-btn :to="`users/${item.id}`">Modifier</b-btn>
+      </template>
+      <template v-slot:cell(delete)="{ item }">
+        <b-btn @click="deleteItem(item)">Supprimer</b-btn>
+      </template>
+    </b-table>
     <b-pagination
       size="md"
       v-model="currentPage"
@@ -44,6 +51,7 @@ export default {
       currentPage: 1,
       filter: '',
       users: [],
+      roles: [],
       column: [
         {
           key: 'Name',
@@ -65,6 +73,14 @@ export default {
           key: 'Heure',
           label: 'Heure',
         },
+        {
+          key: 'edit',
+          label: 'Modifier',
+        },
+        {
+          key: 'delete',
+          label: 'Supprimer',
+        },
       ],
     };
   },
@@ -77,8 +93,64 @@ export default {
     decodeToken(token) {
       return jwt_decode(token);
     },
+    editItem(item) {
+      this.$router.push({
+        name: 'EditUser',
+        params: {
+          id: item.id,
+        },
+      });
+
+      console.log(item);
+    },
+
+    async deleteItem(item) {
+      console.log(item.id);
+      var configDelete = {
+        method: 'delete',
+        url: 'http://localhost:5000/users/' + item.id,
+        headers: {
+          Authorization: 'Bearer ' + user.accessToken,
+        },
+      };
+      await axios(configDelete)
+        .then(() => {
+          this.$notify({
+            group: 'foo',
+            title: 'Utilisateur supprimé',
+            type: 'success',
+            text: "L'utilisateur a été supprimé avec succès",
+            duration: 8000,
+          });
+          for (var i = 0; i < this.users.length; i++) {
+            if (this.users[i].id === item.id) {
+              this.users.splice(i, 1);
+            }
+          }
+
+          this.users.pop();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
   },
   async created() {
+    var configRoles = {
+      method: 'get',
+      url: 'http://localhost:5000/roles/',
+      headers: {
+        Authorization: 'Bearer ' + user.accessToken,
+      },
+    };
+    await axios(configRoles).then(response => {
+      response.data.forEach(role => {
+        this.roles.push({
+          id: role.id,
+          name: role.name,
+        });
+      });
+    });
     var config = {
       method: 'get',
       url: 'http://localhost:5000/users/',
@@ -88,13 +160,15 @@ export default {
     };
     await axios(config)
       .then(response => {
-        console.log(response);
         response.data.forEach(user => {
+          var role = this.roles.find(role => role.id === user.roleId);
+
           this.users.push({
+            id: user.id,
             Name: user.name,
             Email: user.email,
             Adresse: user.address,
-            Role: user.roleId,
+            Role: role.name,
             Date: user.createdAt.split('T')[0],
             Heure: user.createdAt
               .split('T')

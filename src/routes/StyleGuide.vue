@@ -81,9 +81,9 @@
       version rectangulaire. Le choix de quel logo utiliser dépendra de
       l'emplacement spécifique.</a
     >
-    <img class="logo_round" src="../../dist/assets/logo.png" />
-    <img class="logo_mini" src="../../dist/assets/logo_mini.png" />
-    <img class="logo_rec" src="../../dist/assets/logo_rec.png" />
+    <img class="logo_round" src="../../public/Logo.png" />
+    <img class="logo_mini" src="../../public/logo_mini.png" />
+    <img class="logo_rec" src="../../public/logo_rec.png" />
 
     <!-- Boutons -->
     <h2>Les boutons</h2>

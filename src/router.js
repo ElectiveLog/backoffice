@@ -10,6 +10,8 @@ import Log from '@/routes/Log.vue';
 import Components from '@/routes/Components.vue';
 import Commandes from '@/routes/Commandes.vue';
 import User from '@/routes/User.vue';
+import Performances from '@/routes/Performances.vue';
+import EditUser from '@/components/EditUser.vue';
 
 Vue.use(Router);
 
@@ -71,6 +73,16 @@ export default new Router({
       path: '/users',
       name: 'users',
       component: User,
+    },
+    {
+      path: '/users/:id',
+      name: 'editUser',
+      component: EditUser,
+    },
+    {
+      path: '/performances',
+      name: 'Performances',
+      component: Performances,
     },
     {
       path: '/:id',

@@ -1,10 +1,13 @@
 {
-  "name": "clone-eats-vue",
-  "version": "0.1.0",
-  "private": true,
+  "name": "restaurant-card39",
+  "version": "1.0.3",
+  "private": false,
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name myLib src/App.vue",
     "lint": "vue-cli-service lint",
     "start": "node server.js"
   },
