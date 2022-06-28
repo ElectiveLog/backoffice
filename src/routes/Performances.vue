@@ -26,6 +26,16 @@
         <li>le nombre de processus ou de threads que le conteneur a créés</li>
       </ul>
     </div>
+    <div>
+      <h3>Déployer de nouveaux services</h3>
+      Nous utilisons un load-balancer afin de gérer les utilisateurs en cas de
+      crash de l'un de nos 2 conteneurs. Il est donc possible d'éteindre un
+      conteneur sans interruption du service. Le tutoriel est disponible sur le
+      lien suivant :
+      <a style="width: 80px" href="https://github.com/ElectiveLog/Load-Balancer"
+        >Cliquez ici</a
+      >
+    </div>
   </div>
 </template>
 
