@@ -14,7 +14,13 @@
             Connexion
           </button></router-link
         >
-        <div v-if="currentUser">Bonjour {{ userData.name }}</div>
+        &emsp;
+        <router-link v-if="!currentUser" to="/register"
+          ><button class="grey_button styled_button" type="button">
+            Inscription
+          </button></router-link
+        >
+        <label v-if="currentUser" class="labelUserName"></label>
         &emsp;
         <b-dropdown
           v-if="currentUser"
@@ -22,12 +28,41 @@
           toggle-class="customDropdown"
         >
           <b-dropdown-item to="/account">Profil</b-dropdown-item>
-          <b-dropdown-item to="/commandes">Commandes</b-dropdown-item>
-          <b-dropdown-item to="/logs">Logs</b-dropdown-item>
-          <b-dropdown-item to="/components">Composants</b-dropdown-item>
-          <b-dropdown-item to="/users">Utilisateurs</b-dropdown-item>
-          <b-dropdown-item to="/performances">Performances</b-dropdown-item>
-          <b-dropdown-item to="/statistiques">Statistiques</b-dropdown-item>
+
+          <b-dropdown-item
+            v-if="this.userConnectedData.role === 'Technique'"
+            to="/logs"
+            >Logs</b-dropdown-item
+          >
+          <b-dropdown-item
+            v-if="
+              this.userConnectedData.role === 'Technique' ||
+                this.userConnectedData.role === 'Developpeur Tiers'
+            "
+            to="/components"
+            >Composants</b-dropdown-item
+          >
+          <b-dropdown-item
+            v-if="this.userConnectedData.role === 'Technique'"
+            to="/performances"
+            >Performances</b-dropdown-item
+          >
+          <b-dropdown-item
+            v-if="this.userConnectedData.role === 'Commercial'"
+            to="/commandes"
+            >Commandes</b-dropdown-item
+          >
+          <b-dropdown-item
+            v-if="this.userConnectedData.role === 'Commercial'"
+            to="/users"
+            >Utilisateurs</b-dropdown-item
+          >
+          <b-dropdown-item
+            v-if="this.userConnectedData.role === 'Commercial'"
+            to="/statistiques"
+            >Statistiques</b-dropdown-item
+          >
+
           <b-dropdown-item @click.prevent="logOut">Deconnexion</b-dropdown-item>
         </b-dropdown>
       </div>
@@ -54,6 +89,7 @@ export default {
   data() {
     return {
       userData: [],
+      userConnectedData: [],
     };
   },
 
@@ -85,6 +121,7 @@ export default {
   },
   async created() {
     const payloadUser = this.decodeToken(user.accessToken);
+    this.userConnectedData = payloadUser;
     var config = {
       method: 'get',
       url: 'http://localhost:5000/users/' + payloadUser.userId,
@@ -100,6 +137,8 @@ export default {
       .catch(error => {
         console.log(error);
       });
+    document.getElementsByClassName('labelUserName')[0].innerHTML =
+      'Bonjour ' + this.userData.name;
   },
 };
 </script>

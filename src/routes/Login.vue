@@ -35,6 +35,15 @@
                 <div class="valid-feedback">Mot de passe valide</div>
                 <div class="invalid-feedback">Mot de passe invalide</div>
               </div>
+              <div class="col-md-12">
+                <label>Choisissez votre rôle</label>
+                <select v-model="user.roleId">
+                  >
+                  <option v-for="role in roledata" :key="role" :value="role">
+                    {{ role }}
+                  </option>
+                </select>
+              </div>
               <div class="form-check">
                 <input
                   class="form-check-input"
@@ -72,6 +81,8 @@ export default {
       user: new User('', ''),
       loading: false,
       message: '',
+      roledata: ['Commercial', 'Technique', 'Developpeur Tiers'],
+      allRoledata: [],
     };
   },
   computed: {
@@ -82,21 +93,21 @@ export default {
   },
   created() {
     var axios = require('axios');
-
     var config = {
       method: 'get',
-      url: 'http://localhost:3000/api/ingredients/',
+      //url: 'http://localhost:4000/roles/',
+      url: 'http://localhost:5000/roles/',
       headers: {
-        //'X-Server-Select': 'mongo',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNsaWVudEBjbGllbnQuY2xpZW50IiwibmFtZSI6ImNsaWVudGZkIiwicm9sZSI6IkNsaWVudCIsInVzZXJJZCI6ImNsNHNmc3NmNTAwMDEwMXB5ZXVwbnR5NXIiLCJpYXQiOjE2NTY0MDY4MzYsImV4cCI6MTY1NzAxMTYzNn0.ufvyvR3ngfSmK2kTYD_6BC2myzU4lheW1Kp6-UsliOs',
       },
     };
-
     axios(config)
-      .then(function(response) {
-        console.log(JSON.stringify(response.data));
+      .then(response => {
+        this.allRoledata = response.data;
       })
-      .catch(function(error) {
-        console.log(error);
+      .catch(error => {
+        console.log('fdsqf' + error);
       });
 
     if (this.loggedIn) {
@@ -108,59 +119,77 @@ export default {
       console.log('handleLogin');
       this.loading = true;
 
-      if (this.user.email && this.user.password) {
-        console.log('handleLogin: login');
-        this.$store.dispatch('auth/login', this.user).then(
-          response => {
-            console.log('fdsq' + JSON.stringify(response));
-            if (response.status == 203) {
-              this.$notify({
-                group: 'foo',
-                title: 'Erreur',
-                type: 'error',
-                text: response.data,
-                duration: 8000,
-              });
-              this.loading = false;
-              this.message = response;
-            } else {
-              var configLog = {
-                method: 'post',
-                url: 'http://localhost:3000/api/logs/create',
-
-                data: {
-                  type: 'Connexion',
-                  description:
-                    'Connexion réussie sur le backoffice de : ' +
-                    this.user.email +
-                    '',
-                },
-              };
-              axios(configLog)
-                .then(response => {
-                  console.log(JSON.stringify(response.data));
-                })
-                .catch(error => {
-                  console.log(error);
+      this.allRoledata.forEach(element => {
+        if (element.name === this.user.roleId) {
+          this.user.roleId = element.id;
+        }
+      });
+      if (this.user.roleId === '') {
+        this.$notify({
+          group: 'foo',
+          title: 'Role',
+          type: 'error',
+          text: 'Veuillez choisir un rôle',
+          duration: 8000,
+        });
+      } else {
+        console.log(this.user.email);
+        console.log(this.user.password);
+        console.log(this.user.roleId);
+        if (this.user.email && this.user.password) {
+          console.log('handleLogin: login');
+          this.$store.dispatch('auth/login', this.user).then(
+            response => {
+              console.log('fdsq' + JSON.stringify(response));
+              if (response.status == 203) {
+                this.$notify({
+                  group: 'foo',
+                  title: 'Erreur',
+                  type: 'error',
+                  text: response.data,
+                  duration: 8000,
                 });
-              this.$notify({
-                group: 'foo',
-                title: 'Connexion réussie',
-                type: 'success',
-                text: 'Bienvenue ' + this.user.email,
-                duration: 8000,
-              });
-              this.$router.push('/home');
+                this.loading = false;
+                this.message = response;
+              } else {
+                var configLog = {
+                  method: 'post',
+                  url: 'http://localhost:3000/api/logs/create',
+
+                  data: {
+                    type: 'Connexion',
+                    description:
+                      'Connexion réussie sur le backoffice de : ' +
+                      this.user.email +
+                      '',
+                  },
+                };
+                axios(configLog)
+                  .then(response => {
+                    console.log(JSON.stringify(response.data));
+                  })
+                  .catch(error => {
+                    console.log(error);
+                  });
+                this.$notify({
+                  group: 'foo',
+                  title: 'Connexion réussie',
+                  type: 'success',
+                  text: 'Bienvenue ' + this.user.email,
+                  duration: 8000,
+                });
+                this.$router.push('/home');
+              }
+            },
+            error => {
+              this.loading = false;
+              this.message =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
             }
-          },
-          error => {
-            this.loading = false;
-            this.message =
-              (error.response && error.response.data) ||
-              error.message ||
-              error.toString();
-          }
-        );
+          );
+        }
       }
     },
   },

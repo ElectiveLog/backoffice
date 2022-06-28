@@ -9,6 +9,7 @@ class AuthService {
         {
           email: user.email,
           password: user.password,
+          roleId: user.roleId,
         },
         {
           headers: {
