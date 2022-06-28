@@ -4,7 +4,6 @@ import Home from '@/routes/Home.vue';
 import StyleGuide from '@/routes/StyleGuide.vue';
 import Login from '@/routes/Login.vue';
 import Register from '@/routes/Register.vue';
-import Statistics from '@/routes/Statistics.vue';
 import Account from '@/routes/Account.vue';
 import Log from '@/routes/Log.vue';
 import Components from '@/routes/Components.vue';
@@ -12,6 +11,8 @@ import Commandes from '@/routes/Commandes.vue';
 import User from '@/routes/User.vue';
 import Performances from '@/routes/Performances.vue';
 import EditUser from '@/components/EditUser.vue';
+import Statistiques from '@/routes/Statistiques.vue';
+import CreateUser from '@/components/CreateUser.vue';
 
 Vue.use(Router);
 
@@ -23,11 +24,6 @@ export default new Router({
       path: '/',
       name: 'login',
       component: Login,
-    },
-    {
-      path: '/statistics',
-      name: 'statistics',
-      component: Statistics,
     },
     {
       path: '/styleguide',
@@ -80,9 +76,19 @@ export default new Router({
       component: EditUser,
     },
     {
+      path: '/createUser',
+      name: 'createUser',
+      component: CreateUser,
+    },
+    {
       path: '/performances',
       name: 'Performances',
       component: Performances,
+    },
+    {
+      path: '/statistiques',
+      name: 'Statistiques',
+      component: Statistiques,
     },
     {
       path: '/:id',

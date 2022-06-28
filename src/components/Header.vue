@@ -27,6 +27,7 @@
           <b-dropdown-item to="/components">Composants</b-dropdown-item>
           <b-dropdown-item to="/users">Utilisateurs</b-dropdown-item>
           <b-dropdown-item to="/performances">Performances</b-dropdown-item>
+          <b-dropdown-item to="/statistiques">Statistiques</b-dropdown-item>
           <b-dropdown-item @click.prevent="logOut">Deconnexion</b-dropdown-item>
         </b-dropdown>
       </div>
@@ -58,6 +59,23 @@ export default {
 
   methods: {
     logOut() {
+      const payloadUser = this.decodeToken(user.accessToken);
+      var configLog = {
+        method: 'post',
+        url: 'http://localhost:3000/api/logs/create',
+
+        data: {
+          type: 'Deconnexion',
+          description: payloadUser.email + " s'est deconnecté.",
+        },
+      };
+      axios(configLog)
+        .then(response => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(error => {
+          console.log(error);
+        });
       this.$store.dispatch('auth/logout');
       this.$router.push('/');
     },

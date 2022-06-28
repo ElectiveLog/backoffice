@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div>
     <b-input
       class="input-table"
       v-model="filter"
@@ -54,6 +54,10 @@ export default {
           label: 'Etat de la commande',
         },
         {
+          key: 'Prix',
+          label: 'Prix',
+        },
+        {
           key: 'Restaurant',
           label: 'Restaurant',
         },
@@ -84,6 +88,7 @@ export default {
       url: 'http://localhost:3000/api/articles/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
+        //'X-Server-Select': 'mongo',
       },
     };
     await axios(configArticle).then(response => {
@@ -106,6 +111,7 @@ export default {
       url: 'http://localhost:3000/api/restaurants/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
+        //'X-Server-Select': 'mongo',
       },
     };
     await axios(configRestaurant).then(response => {
@@ -124,18 +130,21 @@ export default {
       url: 'http://localhost:3000/api/orders/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
+        //'X-Server-Select': 'mongo',
       },
     };
     await axios(config)
       .then(response => {
         response.data.orders.forEach(order => {
           var articlesNames = '';
+          var priceOrder = 0;
 
           //Get name of articles
           this.articles.forEach(article => {
             order.articles.forEach(articleInside => {
-              if (article.Id === articleInside) {
+              if (article.Id === articleInside._id) {
                 articlesNames += article.Name + ', ';
+                priceOrder += article.Price;
               }
             });
           });
@@ -156,6 +165,7 @@ export default {
             Articles: articleNames,
             State: order.state,
             Restaurant: nameRestaurant,
+            Prix: priceOrder,
             Date: order.createdAt.split('T')[0],
             Heure: order.createdAt
               .split('T')

@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div>
     <b-input
       class="input-table"
       v-model="filter"

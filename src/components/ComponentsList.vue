@@ -56,7 +56,11 @@
     <h3>4. Réutilisabilité des composants</h3>
     Lors de la réalisation de ce projet, nous avons créé plusieurs composants.
     Tous ces composants sont accessibles via la commande :
-    <h6 style="">npm install --save @kirinyo/restaurant-card39</h6>
+    <h6 style="">npm install --save @restaurant-card39</h6>
+    <div>
+      Il est aussi possible de trouver les composants dans le lien suivant :
+      <a href="https://www.npmjs.com/package/restaurant-card39">Cliquez ici</a>
+    </div>
     Ensuite, il faut import les composants dans le template de la page où ils
     doivent être utilisés, ou alors dans le parent le plus haut de l'arbre des
     composants. Les composants installés peuvent finalement être utilisé dans

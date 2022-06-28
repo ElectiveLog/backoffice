@@ -62,6 +62,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
 import User from '../models/user';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -86,7 +87,7 @@ export default {
       method: 'get',
       url: 'http://localhost:3000/api/ingredients/',
       headers: {
-        'X-Server-Select': 'mongo',
+        //'X-Server-Select': 'mongo',
       },
     };
 
@@ -123,6 +124,25 @@ export default {
               this.loading = false;
               this.message = response;
             } else {
+              var configLog = {
+                method: 'post',
+                url: 'http://localhost:3000/api/logs/create',
+
+                data: {
+                  type: 'Connexion',
+                  description:
+                    'Connexion réussie sur le backoffice de : ' +
+                    this.user.email +
+                    '',
+                },
+              };
+              axios(configLog)
+                .then(response => {
+                  console.log(JSON.stringify(response.data));
+                })
+                .catch(error => {
+                  console.log(error);
+                });
               this.$notify({
                 group: 'foo',
                 title: 'Connexion réussie',

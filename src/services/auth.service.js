@@ -1,11 +1,11 @@
-import axios from "axios";
-const API_URL = "http://localhost:5000/users/";
+import axios from 'axios';
+const API_URL = 'http://localhost:5000/users/';
 class AuthService {
   login(user) {
     console.log(user);
     return axios
       .post(
-        API_URL + "login",
+        API_URL + 'login',
         {
           email: user.email,
           password: user.password,
@@ -16,19 +16,19 @@ class AuthService {
           },
         }
       )
-      .then((response) => {
+      .then(response => {
         if (response.data.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
+          localStorage.setItem('user', JSON.stringify(response.data));
         }
         return response;
       });
   }
   logout() {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
   }
   register(user) {
     return axios.post(
-      API_URL + "create",
+      API_URL + 'create',
       {
         name: user.username,
         email: user.email,

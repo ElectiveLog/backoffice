@@ -1,5 +1,8 @@
 <template>
-  <div class="table">
+  <div>
+    <b-button style="float: right" to="/createUser"
+      >Créer un utilisateur</b-button
+    >
     <b-input
       class="input-table"
       v-model="filter"
@@ -70,10 +73,6 @@ export default {
           label: 'Role',
         },
         {
-          key: 'Heure',
-          label: 'Heure',
-        },
-        {
           key: 'edit',
           label: 'Modifier',
         },
@@ -100,12 +99,10 @@ export default {
           id: item.id,
         },
       });
-
-      console.log(item);
     },
 
     async deleteItem(item) {
-      console.log(item.id);
+      var payloadUser = this.decodeToken(user.accessToken);
       var configDelete = {
         method: 'delete',
         url: 'http://localhost:5000/users/' + item.id,
@@ -115,6 +112,26 @@ export default {
       };
       await axios(configDelete)
         .then(() => {
+          var configLog = {
+            method: 'post',
+            url: 'http://localhost:3000/api/logs/create',
+
+            data: {
+              type: "Suppression d'un utilisateur",
+              description:
+                payloadUser.email +
+                " a supprimé l'utilisateur " +
+                item.Email +
+                ' sur le backoffice.',
+            },
+          };
+          axios(configLog)
+            .then(response => {
+              console.log(JSON.stringify(response.data));
+            })
+            .catch(error => {
+              console.log(error);
+            });
           this.$notify({
             group: 'foo',
             title: 'Utilisateur supprimé',
