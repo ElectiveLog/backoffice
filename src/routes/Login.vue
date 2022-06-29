@@ -78,7 +78,7 @@ export default {
     var config = {
       method: 'get',
       //url: 'http://localhost:4000/roles/',
-      url: 'http://localhost:5000/roles/',
+      url: 'http://localhost:8080/roles/',
       headers: {
         Authorization:
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNsaWVudEBjbGllbnQuY2xpZW50IiwibmFtZSI6ImNsaWVudGZkIiwicm9sZSI6IkNsaWVudCIsInVzZXJJZCI6ImNsNHNmc3NmNTAwMDEwMXB5ZXVwbnR5NXIiLCJpYXQiOjE2NTY0MDY4MzYsImV4cCI6MTY1NzAxMTYzNn0.ufvyvR3ngfSmK2kTYD_6BC2myzU4lheW1Kp6-UsliOs',
@@ -122,8 +122,8 @@ export default {
           console.log('handleLogin: login');
           this.$store.dispatch('auth/login', this.user).then(
             response => {
-              console.log('fdsq' + JSON.stringify(response));
               if (response.status == 203) {
+                console.log('handleLogin: login: success');
                 this.$notify({
                   group: 'foo',
                   title: 'Erreur',
@@ -134,9 +134,10 @@ export default {
                 this.loading = false;
                 this.message = response;
               } else {
+                console.log('handleLogin: login: success2');
                 var configLog = {
                   method: 'post',
-                  url: 'http://localhost:3000/api/logs/create',
+                  url: 'http://localhost:8080/api/logs/create',
 
                   data: {
                     type: 'Connexion',
