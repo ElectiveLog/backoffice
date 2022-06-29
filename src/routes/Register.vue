@@ -9,17 +9,13 @@
               Ce forumlaire vous inscrit en temps que Développeur Tiers. Merci
               de compléter les différentes informations.
             </p>
-            <form
-              class="requires-validation"
-              novalidate
-              @submit.prevent="handleRegister"
-            >
+            <form class="requires-validation" @submit.prevent="handleRegister">
               <div class="col-md-12">
                 <input
                   class="form-control"
                   type="text"
                   name="name"
-                  placeholder="Nom"
+                  placeholder="Nom *"
                   required
                   v-model="user.username"
                 />
@@ -32,7 +28,7 @@
                   class="form-control"
                   type="email"
                   name="email"
-                  placeholder="Adresse e-mail"
+                  placeholder="Adresse e-mail *"
                   v-model="user.email"
                   required
                 />
@@ -45,25 +41,13 @@
                   class="form-control"
                   type="password"
                   name="password"
-                  placeholder="Mot de passe"
+                  minlength="8"
+                  placeholder="Mot de passe *"
                   v-model="user.password"
                   required
                 />
                 <div class="valid-feedback">Mot de passe valide</div>
                 <div class="invalid-feedback">Mot de passe invalide</div>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="invalidCheck"
-                  required
-                />
-                <label class="form-check-label"
-                  >Je confirme les informations saisies</label
-                >
-                <div class="invalid-feedback">Merci de confirmer.</div>
               </div>
 
               <div class="form-button mt-3">

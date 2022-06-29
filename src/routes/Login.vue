@@ -6,11 +6,7 @@
           <div class="form-items">
             <h3>Connexion</h3>
             <p>Merci de compléter les différentes informations.</p>
-            <form
-              class="requires-validation"
-              novalidate
-              @submit.prevent="handleLogin"
-            >
+            <form class="requires-validation" @submit.prevent="handleLogin">
               <div class="col-md-12">
                 <input
                   class="form-control"
@@ -44,20 +40,6 @@
                   </option>
                 </select>
               </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="invalidCheck"
-                  required
-                />
-                <label class="form-check-label"
-                  >Je confirme les informations saisies</label
-                >
-                <div class="invalid-feedback">Merci de confirmer.</div>
-              </div>
-
               <div class="form-button mt-3">
                 <button class="green_button styled_button" type="submit">
                   Valider
