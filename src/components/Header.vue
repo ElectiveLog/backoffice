@@ -4,9 +4,24 @@
       <router-link v-if="!currentUser" to="/"
         ><img class="logo" src="../../public/Logo.png" alt="CES'EATS LOGO"
       /></router-link>
-      <router-link v-if="currentUser" to="/home"
+      <router-link
+        v-if="currentUser && this.userConnectedData.role === 'Technique'"
+        to="/logs"
         ><img class="logo" src="../../public/Logo.png" alt="CES'EATS LOGO"
       /></router-link>
+      <router-link
+        v-if="currentUser && this.userConnectedData.role === 'Commercial'"
+        to="/users"
+        ><img class="logo" src="../../public/Logo.png" alt="CES'EATS LOGO"
+      /></router-link>
+      <router-link
+        v-if="
+          currentUser && this.userConnectedData.role === 'Developpeur Tiers'
+        "
+        to="/components"
+        ><img class="logo" src="../../public/Logo.png" alt="CES'EATS LOGO"
+      /></router-link>
+
       <div class="header-right">
         &emsp;
         <router-link v-if="!currentUser" to="/login"

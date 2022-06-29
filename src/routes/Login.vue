@@ -178,7 +178,18 @@ export default {
                   text: 'Bienvenue ' + this.user.email,
                   duration: 8000,
                 });
-                this.$router.push('/home');
+                var roleName = '';
+                this.allRoledata.forEach(role => {
+                  if (role.id === this.user.roleId) {
+                    roleName = role.name;
+                  }
+                });
+
+                if (roleName === 'Commercial') this.$router.push('/users');
+                if (roleName === 'Technique') this.$router.push('/logs');
+                if (roleName === 'Developpeur Tiers')
+                  this.$router.push('/components');
+                location.reload();
               }
             },
             error => {

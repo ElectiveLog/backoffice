@@ -13,10 +13,11 @@ import Performances from '@/routes/Performances.vue';
 import EditUser from '@/components/EditUser.vue';
 import Statistiques from '@/routes/Statistiques.vue';
 import CreateUser from '@/components/CreateUser.vue';
+import jwt_decode from 'jwt-decode';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -91,10 +92,50 @@ export default new Router({
       component: Statistiques,
     },
     {
-      path: '/:id',
-      name: 'place',
-      component: () =>
-        import(/* webpackChunkName: "place" */ '@/routes/Place.vue'),
+      path: '/:pathMatch(.*)*',
+      beforeEnter: (to, from, next) => {
+        next('/');
+      },
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login', '/register'];
+  const authRequired = !publicPages.includes(to.path);
+
+  const loggedIn = localStorage.getItem('user');
+  if (authRequired && !loggedIn) {
+    next('/login');
+  } else {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      const infosUser = jwt_decode(user.accessToken);
+      const commercialPages = ['/logs', '/components', '/performances'];
+      const techniquePages = ['/commandes', '/users', '/statistiques'];
+      const devTiersPages = [
+        '/commandes',
+        '/users',
+        '/statistiques',
+        '/logs',
+        '/performances',
+      ];
+      if (infosUser.role == 'Commercial' && commercialPages.includes(to.path)) {
+        next('/');
+      } else if (
+        infosUser.role == 'Technique' &&
+        techniquePages.includes(to.path)
+      ) {
+        next('/');
+      } else if (
+        infosUser.role == 'Developpeur Tiers' &&
+        devTiersPages.includes(to.path)
+      ) {
+        next('/');
+      }
+    }
+    next();
+  }
+});
+
+export default router;
