@@ -677,3 +677,9 @@ code {
   padding-right: 5%;
   padding-left: 5%;
 }
+
+@media screen and (max-width: 600px) {
+  .responsive_login {
+    width: max-content;
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="responsive_login">
     <Header />
     <transition name="fade" mode="out-in">
       <router-view />

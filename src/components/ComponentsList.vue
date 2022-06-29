@@ -136,7 +136,7 @@ export default {
 
     var configNumberDownload = {
       method: 'get',
-      url: 'https://api.npmjs.org/downloads/point/last-day/test-components',
+      url: 'https://api.npmjs.org/downloads/point/last-month/restaurant-card39',
     };
     axios(configNumberDownload).then(response => {
       this.numberDownload = response.data.downloads;
