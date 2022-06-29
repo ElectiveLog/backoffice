@@ -184,7 +184,7 @@ export default {
                     roleName = role.name;
                   }
                 });
-
+                console.log(roleName);
                 if (roleName === 'Commercial') this.$router.push('/users');
                 if (roleName === 'Technique') this.$router.push('/logs');
                 if (roleName === 'Developpeur Tiers')
