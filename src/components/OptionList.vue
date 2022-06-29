@@ -19,27 +19,27 @@
 </template>
 
 <script>
-import OptionItem from "@/components/OptionItem";
+import OptionItem from '@/components/OptionItem';
 export default {
-  name: "OptionList",
+  name: 'OptionList',
   props: {
     list: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     idPlace: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
   components: {
-    OptionItem
+    OptionItem,
   },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
-    }
-  }
+    },
+  },
 };
 </script>
 

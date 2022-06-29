@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="card-header">
-      <h4 class="card-heading">Modifier son profil</h4>
+      <h4 class="card-heading">Créer un utilisateur</h4>
     </div>
-    <form class="card mb-4" @submit.prevent="handleEdit">
+    <form class="card mb-4" @submit.prevent="handleCreate">
       <div class="card-body">
         <div class="row">
           <div class="col-sm-6 col-md-3">
@@ -118,14 +118,9 @@
         </div>
       </div>
       <div class="card-footer text-end">
-        <button class="green_button styled_button" type="submit">
-          Sauvegarder les modifications
-        </button>
+        <button class="green_button styled_button" type="submit">Créer</button>
       </div>
     </form>
-    <button class="red_button styled_button" v-on:click="handleDelete">
-      Supprimer son compte
-    </button>
   </div>
 </template>
 
@@ -135,25 +130,28 @@ var axios = require('axios');
 const user = JSON.parse(localStorage.getItem('user'));
 
 export default {
-  name: 'Account',
+  name: 'CreateUser',
+  components: {},
   data() {
     return {
-      userData: [],
-      selected: '',
+      userData: {},
       rolesName: [],
+      roles: [],
+      selected: null,
     };
   },
+  computed: {},
   methods: {
-    handleEdit() {
+    handleCreate() {
       const payloadUser = this.decodeToken(user.accessToken);
       this.roles.forEach(role => {
-        if (role.name == this.selected) {
+        if (role.name === this.selected) {
           this.userData.roleId = role.id;
         }
       });
       var config = {
-        method: 'put',
-        url: 'http://localhost:5000/users/' + payloadUser.userId,
+        method: 'post',
+        url: 'http://localhost:5000/users/create',
         headers: {
           Authorization: 'Bearer ' + user.accessToken,
         },
@@ -167,53 +165,10 @@ export default {
             url: 'http://localhost:3000/api/logs/create',
 
             data: {
-              type: "Modification d'utilisateur",
+              type: "Création d'utilisateur",
               description:
                 payloadUser.email +
-                " a modifié l'utilisateur " +
-                this.userData.email,
-            },
-          };
-          axios(configLog)
-            .then(response => {
-              console.log(JSON.stringify(response.data));
-            })
-            .catch(error => {
-              console.log(error);
-            });
-          this.$notify({
-            group: 'foo',
-            title: 'Modification réussie',
-            type: 'success',
-            text: 'Vos modifications ont été enregistrées',
-            duration: 8000,
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    handleDelete() {
-      const payloadUser = this.decodeToken(user.accessToken);
-      var config = {
-        method: 'delete',
-        url: 'http://localhost:5000/users/' + payloadUser.userId,
-        headers: {
-          Authorization: 'Bearer ' + user.accessToken,
-        },
-      };
-
-      axios(config)
-        .then(() => {
-          var configLog = {
-            method: 'post',
-            url: 'http://localhost:3000/api/logs/create',
-
-            data: {
-              type: "Suppression d'un utilisateur",
-              description:
-                payloadUser.email +
-                " a supprimé l'utilisateur" +
+                " a créé l'utilisateur" +
                 this.userData.email +
                 ' sur le backoffice.',
             },
@@ -227,40 +182,24 @@ export default {
             });
           this.$notify({
             group: 'foo',
-            title: 'Suppression réussie',
+            title: 'Création réussie',
             type: 'success',
-            text: 'Votre compte a été supprimé',
+            text: "L'utilisateur a bien été créé.",
             duration: 8000,
-          });
-          this.$store.dispatch('auth/logout');
-          this.$router.push('/login');
+          }),
+            this.$router.push('/users');
         })
-        .catch(error => {
+        .catch(function(error) {
           console.log(error);
         });
     },
+
     decodeToken(token) {
       return jwt_decode(token);
     },
   },
   async created() {
-    const payloadUser = this.decodeToken(user.accessToken);
     var config = {
-      method: 'get',
-      url: 'http://localhost:5000/users/' + payloadUser.userId,
-      headers: {
-        Authorization: 'Bearer ' + user.accessToken,
-      },
-    };
-
-    await axios(config)
-      .then(response => {
-        this.userData = response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    var configRoles = {
       method: 'get',
       url: 'http://localhost:5000/roles',
       headers: {
@@ -268,7 +207,7 @@ export default {
       },
     };
 
-    await axios(configRoles)
+    await axios(config)
       .then(response => {
         this.roles = response.data;
         response.data.forEach(role => {
@@ -281,11 +220,13 @@ export default {
       .catch(error => {
         console.log(error);
       });
-    this.roles.forEach(role => {
-      if (role.id == this.userData.roleId) {
-        this.selected = role.name;
-      }
-    });
   },
 };
 </script>
+
+<style scoped>
+.input-table {
+  width: 250px;
+  margin-bottom: 2%;
+}
+</style>

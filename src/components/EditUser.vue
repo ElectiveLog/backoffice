@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card-header">
-      <h4 class="card-heading">Modifier son profil</h4>
+      <h4 class="card-heading">Modifier un utilisateur</h4>
     </div>
     <form class="card mb-4" @submit.prevent="handleEdit">
       <div class="card-body">
@@ -123,9 +123,6 @@
         </button>
       </div>
     </form>
-    <button class="red_button styled_button" v-on:click="handleDelete">
-      Supprimer son compte
-    </button>
   </div>
 </template>
 
@@ -135,17 +132,21 @@ var axios = require('axios');
 const user = JSON.parse(localStorage.getItem('user'));
 
 export default {
-  name: 'Account',
+  name: 'EditUser',
+  components: {},
   data() {
     return {
-      userData: [],
+      //Pagination
+      idUser: this.$route.params.id,
+      userData: {},
+      roles: [],
       selected: '',
       rolesName: [],
     };
   },
+  computed: {},
   methods: {
     handleEdit() {
-      const payloadUser = this.decodeToken(user.accessToken);
       this.roles.forEach(role => {
         if (role.name == this.selected) {
           this.userData.roleId = role.id;
@@ -153,87 +154,52 @@ export default {
       });
       var config = {
         method: 'put',
-        url: 'http://localhost:5000/users/' + payloadUser.userId,
+        url: 'http://localhost:5000/users/' + this.idUser,
         headers: {
           Authorization: 'Bearer ' + user.accessToken,
         },
         data: this.userData,
       };
-
-      axios(config)
-        .then(() => {
-          var configLog = {
-            method: 'post',
-            url: 'http://localhost:3000/api/logs/create',
-
-            data: {
-              type: "Modification d'utilisateur",
-              description:
-                payloadUser.email +
-                " a modifié l'utilisateur " +
-                this.userData.email,
-            },
-          };
-          axios(configLog)
-            .then(response => {
-              console.log(JSON.stringify(response.data));
-            })
-            .catch(error => {
-              console.log(error);
-            });
-          this.$notify({
-            group: 'foo',
-            title: 'Modification réussie',
-            type: 'success',
-            text: 'Vos modifications ont été enregistrées',
-            duration: 8000,
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    handleDelete() {
       const payloadUser = this.decodeToken(user.accessToken);
-      var config = {
-        method: 'delete',
-        url: 'http://localhost:5000/users/' + payloadUser.userId,
-        headers: {
-          Authorization: 'Bearer ' + user.accessToken,
-        },
-      };
-
       axios(config)
-        .then(() => {
-          var configLog = {
-            method: 'post',
-            url: 'http://localhost:3000/api/logs/create',
+        .then(response => {
+          if (response.status == 200) {
+            var configLog = {
+              method: 'post',
+              url: 'http://localhost:3000/api/logs/create',
 
-            data: {
-              type: "Suppression d'un utilisateur",
-              description:
-                payloadUser.email +
-                " a supprimé l'utilisateur" +
-                this.userData.email +
-                ' sur le backoffice.',
-            },
-          };
-          axios(configLog)
-            .then(response => {
-              console.log(JSON.stringify(response.data));
-            })
-            .catch(error => {
-              console.log(error);
+              data: {
+                type: "Modification d'utilisateur",
+                description:
+                  payloadUser.email +
+                  " a modifié l'utilisateur " +
+                  this.userData.email,
+              },
+            };
+            axios(configLog)
+              .then(response => {
+                console.log(JSON.stringify(response.data));
+              })
+              .catch(error => {
+                console.log(error);
+              });
+            this.$notify({
+              group: 'foo',
+              title: 'Modification réussie',
+              type: 'success',
+              text: 'Vos modifications ont été enregistrées',
+              duration: 8000,
+            }),
+              this.$router.push('/users');
+          } else {
+            this.$notify({
+              group: 'foo',
+              title: 'Erreur',
+              type: 'error',
+              text: 'Une erreur est survenue',
+              duration: 8000,
             });
-          this.$notify({
-            group: 'foo',
-            title: 'Suppression réussie',
-            type: 'success',
-            text: 'Votre compte a été supprimé',
-            duration: 8000,
-          });
-          this.$store.dispatch('auth/logout');
-          this.$router.push('/login');
+          }
         })
         .catch(error => {
           console.log(error);
@@ -244,22 +210,16 @@ export default {
     },
   },
   async created() {
-    const payloadUser = this.decodeToken(user.accessToken);
     var config = {
       method: 'get',
-      url: 'http://localhost:5000/users/' + payloadUser.userId,
+      url: 'http://localhost:5000/users/' + this.idUser,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
     };
-
-    await axios(config)
-      .then(response => {
-        this.userData = response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    axios(config).then(response => {
+      this.userData = response.data;
+    });
     var configRoles = {
       method: 'get',
       url: 'http://localhost:5000/roles',
@@ -289,3 +249,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.input-table {
+  width: 250px;
+  margin-bottom: 2%;
+}
+</style>

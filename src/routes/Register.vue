@@ -5,7 +5,10 @@
         <div class="form-content">
           <div class="form-items">
             <h3>Inscription</h3>
-            <p>Merci de compléter les différentes informations.</p>
+            <p>
+              Ce forumlaire vous inscrit en temps que Développeur Tiers. Merci
+              de compléter les différentes informations.
+            </p>
             <form
               class="requires-validation"
               novalidate
@@ -35,22 +38,6 @@
                 />
                 <div class="valid-feedback">Email valide</div>
                 <div class="invalid-feedback">Email invalide</div>
-              </div>
-              <div class="col-md-12">
-                <select v-model="user.roleId">
-                  >
-                  <option selected value="">Choisissez</option>
-                  <option
-                    v-for="role in roledata"
-                    :key="role.id"
-                    :value="role.id"
-                  >
-                    {{ role.name }}
-                  </option>
-                </select>
-
-                <div class="valid-feedback">Choix valide</div>
-                <div class="invalid-feedback">Choix invalide</div>
               </div>
 
               <div class="col-md-12">
@@ -118,7 +105,7 @@ export default {
       url: 'http://localhost:5000/roles/',
       headers: {
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NTU3NTg3MjUsImV4cCI6MTY1NjM2MzUyNX0.vHdiEc98ELrbBDbeZeG-851qS_SLSHJW8HDJX7mPgjs',
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNsaWVudEBjbGllbnQuY2xpZW50IiwibmFtZSI6ImNsaWVudGZkIiwicm9sZSI6IkNsaWVudCIsInVzZXJJZCI6ImNsNHNmc3NmNTAwMDEwMXB5ZXVwbnR5NXIiLCJpYXQiOjE2NTY0MDY4MzYsImV4cCI6MTY1NzAxMTYzNn0.ufvyvR3ngfSmK2kTYD_6BC2myzU4lheW1Kp6-UsliOs',
       },
     };
 
@@ -140,6 +127,10 @@ export default {
     handleRegister() {
       this.message = '';
       this.submitted = true;
+      this.roledata.forEach(role => {
+        console.log(role.name);
+        if (role.name === 'Developpeur Tiers') this.user.roleId = role.id;
+      });
 
       this.$store.dispatch('auth/register', this.user).then(
         data => {

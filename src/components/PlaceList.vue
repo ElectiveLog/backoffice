@@ -5,16 +5,16 @@
 </template>
 
 <script>
-import PlaceItem from "@/components/PlaceItem";
+import PlaceItem from '@/components/PlaceItem';
 
 export default {
   components: {
-    PlaceItem
+    PlaceItem,
   },
   computed: {
     list() {
       return this.$store.getters.filteredList;
-    }
-  }
+    },
+  },
 };
 </script>
