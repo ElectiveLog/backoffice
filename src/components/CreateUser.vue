@@ -151,7 +151,7 @@ export default {
       });
       var config = {
         method: 'post',
-        url: 'http://localhost:5000/users/create',
+        url: 'http://localhost:8080/users/create',
         headers: {
           Authorization: 'Bearer ' + user.accessToken,
         },
@@ -162,7 +162,7 @@ export default {
         .then(() => {
           var configLog = {
             method: 'post',
-            url: 'http://localhost:3000/api/logs/create',
+            url: 'http://localhost:8080/api/logs/create',
 
             data: {
               type: "Création d'utilisateur",
@@ -201,7 +201,7 @@ export default {
   async created() {
     var config = {
       method: 'get',
-      url: 'http://localhost:5000/roles',
+      url: 'http://localhost:8080/roles',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },

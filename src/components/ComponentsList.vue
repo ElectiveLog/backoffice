@@ -144,7 +144,7 @@ export default {
 
     var config = {
       method: 'get',
-      url: 'http://localhost:3000/api/logs/',
+      url: 'http://localhost:8080/api/logs/',
       headers: {
         Authorization: 'Bearer ' + payloadUser,
       },

@@ -105,7 +105,7 @@ export default {
     //Get all roles
     var configRoles = {
       method: 'get',
-      url: 'http://localhost:5000/roles/',
+      url: 'http://localhost:8080/roles/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -121,7 +121,7 @@ export default {
     //Get nb users
     var configUsers = {
       method: 'get',
-      url: 'http://localhost:5000/users',
+      url: 'http://localhost:8080/users',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -154,7 +154,7 @@ export default {
 
     var configLivreurs = {
       method: 'get',
-      url: 'http://localhost:5000/users/get/role/' + roleLivreurId,
+      url: 'http://localhost:8080/users/get/role/' + roleLivreurId,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -183,7 +183,7 @@ export default {
     });
     var configClients = {
       method: 'get',
-      url: 'http://localhost:5000/users/get/role/' + roleClientId,
+      url: 'http://localhost:8080/users/get/role/' + roleClientId,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -212,7 +212,7 @@ export default {
     });
     var configRestaurateurs = {
       method: 'get',
-      url: 'http://localhost:5000/users/get/role/' + roleRestaurateurId,
+      url: 'http://localhost:8080/users/get/role/' + roleRestaurateurId,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -241,7 +241,7 @@ export default {
     });
     var configCommerciaux = {
       method: 'get',
-      url: 'http://localhost:5000/users/get/role/' + roleCommerciauxId,
+      url: 'http://localhost:8080/users/get/role/' + roleCommerciauxId,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -270,7 +270,7 @@ export default {
     });
     var configTechniques = {
       method: 'get',
-      url: 'http://localhost:5000/users/get/role/' + roleTechniqueId,
+      url: 'http://localhost:8080/users/get/role/' + roleTechniqueId,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -299,7 +299,7 @@ export default {
     });
     var configDevTiers = {
       method: 'get',
-      url: 'http://localhost:5000/users/get/role/' + roleDevTiersId,
+      url: 'http://localhost:8080/users/get/role/' + roleDevTiersId,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -324,10 +324,10 @@ export default {
     //Get nb commandes
     var configOrders = {
       method: 'get',
-      url: 'http://localhost:3000/api/orders/',
+      url: 'http://localhost:8080/api/orders/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
-        //'X-Server-Select': 'mongo',
+        'X-Server-Select': 'mongo',
       },
     };
     await axios(configOrders).then(response => {
@@ -352,10 +352,10 @@ export default {
     //Get nb restaurants
     var configRestaurant = {
       method: 'get',
-      url: 'http://localhost:3000/api/restaurants/',
+      url: 'http://localhost:8080/api/restaurants/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
-        //'X-Server-Select': 'mongo',
+        'X-Server-Select': 'mongo',
       },
     };
     await axios(configRestaurant).then(response => {
@@ -377,10 +377,10 @@ export default {
     //Get articles
     var configArticles = {
       method: 'get',
-      url: 'http://localhost:3000/api/articles/',
+      url: 'http://localhost:8080/api/articles/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
-        //'X-Server-Select': 'mongo',
+        'X-Server-Select': 'mongo',
       },
     };
     await axios(configArticles).then(response => {

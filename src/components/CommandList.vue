@@ -142,7 +142,7 @@ export default {
     console.log(payloadUser.userId);
     var configUser = {
       method: 'get',
-      url: 'http://localhost:5000/users/' + payloadUser.userId,
+      url: 'http://localhost:8080/users/' + payloadUser.userId,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -157,10 +157,10 @@ export default {
 
     var configArticle = {
       method: 'get',
-      url: 'http://localhost:3000/api/articles/',
+      url: 'http://localhost:8080/api/articles/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
-        //'X-Server-Select': 'mongo',
+        'X-Server-Select': 'mongo',
       },
     };
     await axios(configArticle).then(response => {
@@ -180,10 +180,10 @@ export default {
     });
     var configRestaurant = {
       method: 'get',
-      url: 'http://localhost:3000/api/restaurants/',
+      url: 'http://localhost:8080/api/restaurants/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
-        //'X-Server-Select': 'mongo',
+        'X-Server-Select': 'mongo',
       },
     };
     await axios(configRestaurant).then(response => {
@@ -199,10 +199,10 @@ export default {
 
     var config = {
       method: 'get',
-      url: 'http://localhost:3000/api/orders/',
+      url: 'http://localhost:8080/api/orders/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
-        //'X-Server-Select': 'mongo',
+        'X-Server-Select': 'mongo',
       },
     };
     await axios(config)

@@ -112,21 +112,21 @@ export default {
 
       var config = {
         method: 'delete',
-        url: 'http://localhost:3000/api/logs/',
+        url: 'http://localhost:8080/api/logs/',
         headers: {
           Authorization: 'Bearer ' + user.accessToken,
+          'X-Server-Select': 'mongo',
         },
       };
       await axios(config)
         .then(response => {
           if (response.status === 200) {
-            this.$notify({
-              group: 'foo',
-              title: 'Suppression réussie',
-              type: 'success',
-              text: 'Les logs ont bien été supprimés.',
-              duration: 8000,
-            });
+            if (Notification.permission === 'granted') {
+              new Notification(
+                'Les logs ont été téléchargés et supprimés avec succès !'
+              );
+            }
+            location.reload();
           } else {
             this.$notify({
               group: 'foo',
@@ -145,9 +145,10 @@ export default {
   async created() {
     var config = {
       method: 'get',
-      url: 'http://localhost:3000/api/logs/',
+      url: 'http://localhost:8080/api/logs/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
+        'X-Server-Select': 'mongo',
       },
     };
     await axios(config)
