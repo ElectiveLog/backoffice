@@ -11,11 +11,7 @@ class AuthService {
           password: user.password,
           roleId: user.roleId,
         },
-        {
-          headers: {
-            // "X-Server-Select": "auth"
-          },
-        }
+        {}
       )
       .then(response => {
         if (response.data.accessToken) {
