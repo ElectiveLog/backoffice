@@ -399,7 +399,8 @@ export default {
       });
     });
     this.users.forEach(user => {
-      if (user.SponsorshipCode != undefined) {
+      console.log(user.SponsorshipCode);
+      if (user.SponsorshipCode != null && user.SponsorshipCode != '') {
         this.nbUsersWithCode++;
       }
     });
