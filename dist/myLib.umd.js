@@ -9767,7 +9767,7 @@ console.log(user);
               payloadUser = this.decodeToken(user.accessToken);
               config = {
                 method: 'get',
-                url: 'http://localhost:5000/users/' + payloadUser.userId,
+                url: 'http://10.117.129.194:8080/users/' + payloadUser.userId,
                 headers: {
                   Authorization: 'Bearer ' + user.accessToken
                 }

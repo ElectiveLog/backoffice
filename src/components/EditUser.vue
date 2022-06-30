@@ -154,7 +154,7 @@ export default {
       });
       var config = {
         method: 'put',
-        url: 'http://localhost:5000/users/' + this.idUser,
+        url: 'http://10.117.129.194:8080/users/' + this.idUser,
         headers: {
           Authorization: 'Bearer ' + user.accessToken,
         },
@@ -166,7 +166,7 @@ export default {
           if (response.status == 200) {
             var configLog = {
               method: 'post',
-              url: 'http://localhost:3000/api/logs/create',
+              url: 'http://10.117.129.194:8080/api/logs/create',
 
               data: {
                 type: "Modification d'utilisateur",
@@ -212,7 +212,7 @@ export default {
   async created() {
     var config = {
       method: 'get',
-      url: 'http://localhost:5000/users/' + this.idUser,
+      url: 'http://10.117.129.194:8080/users/' + this.idUser,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -222,7 +222,7 @@ export default {
     });
     var configRoles = {
       method: 'get',
-      url: 'http://localhost:5000/roles',
+      url: 'http://10.117.129.194:8080/roles',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
