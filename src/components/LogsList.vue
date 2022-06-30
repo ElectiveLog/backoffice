@@ -43,7 +43,7 @@
             </b-col>
             <b-col>
               <label style="color: red; float: right; width: 200px">
-                Exporter les données suppriment tous les logs !</label
+                Exporter les données supprime tous les logs !</label
               >
             </b-col>
           </b-col>
