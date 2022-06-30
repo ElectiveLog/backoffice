@@ -122,8 +122,8 @@ export default {
           console.log('handleLogin: login');
           this.$store.dispatch('auth/login', this.user).then(
             response => {
-              console.log('fdsq' + JSON.stringify(response));
               if (response.status == 203) {
+                console.log('handleLogin: login: success');
                 this.$notify({
                   group: 'foo',
                   title: 'Erreur',
@@ -134,10 +134,10 @@ export default {
                 this.loading = false;
                 this.message = response;
               } else {
+                console.log('handleLogin: login: success2');
                 var configLog = {
                   method: 'post',
                   url: 'http://10.117.129.194:8080/api/logs/create',
-
                   data: {
                     type: 'Connexion',
                     description:

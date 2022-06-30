@@ -119,19 +119,44 @@ export default {
       this.$store.dispatch('auth/register', this.user).then(
         data => {
           this.message = data.message;
-          this.successful = true;
-          this.$notify({
-            group: 'foo',
-            title: 'Inscription réussie',
-            type: 'success',
-            text:
-              'Bienvenue ' +
-              this.user.email +
-              ' !' +
-              'Vous pouvez vous connecter.',
-            duration: 8000,
-          });
-          this.$router.push('/login');
+          if (data == 'User already exists') {
+            this.successful = false;
+
+            this.$notify({
+              group: 'foo',
+              title: 'Inscription échouée',
+              type: 'error',
+              text:
+                "L'adresse mail " +
+                this.user.email +
+                ' possède déjà un compte. Veuillez vous connecter.',
+              duration: 8000,
+            });
+          } else if (data == 'Error when creating the user') {
+            this.successful = false;
+            this.$notify({
+              group: 'foo',
+              title: 'Inscription échouée',
+              type: 'error',
+              text:
+                'Un problème inconnu est survenu lors de la création de votre compte. Veuillez réessayer.',
+              duration: 8000,
+            });
+          } else {
+            this.successful = true;
+            this.$notify({
+              group: 'foo',
+              title: 'Inscription réussie',
+              type: 'success',
+              text:
+                'Bienvenue ' +
+                this.user.email +
+                ' !' +
+                'Vous pouvez vous connecter.',
+              duration: 8000,
+            });
+            this.$router.push('/login');
+          }
         },
         error => {
           this.message =
