@@ -43,7 +43,7 @@
             </b-col>
             <b-col>
               <label style="color: red; float: right; width: 200px">
-                Exporter les données suppriment tous les logs !</label
+                Exporter les données supprime tous les logs !</label
               >
             </b-col>
           </b-col>
@@ -112,7 +112,7 @@ export default {
 
       var config = {
         method: 'delete',
-        url: 'http://localhost:8080/api/logs/',
+        url: 'http://10.117.129.194:8080/api/logs/',
         headers: {
           Authorization: 'Bearer ' + user.accessToken,
           'X-Server-Select': 'mongo',
@@ -145,7 +145,7 @@ export default {
   async created() {
     var config = {
       method: 'get',
-      url: 'http://localhost:8080/api/logs/',
+      url: 'http://10.117.129.194:8080/api/logs/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
         'X-Server-Select': 'mongo',

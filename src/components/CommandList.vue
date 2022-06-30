@@ -142,7 +142,7 @@ export default {
     console.log(payloadUser.userId);
     var configUser = {
       method: 'get',
-      url: 'http://localhost:8080/users/' + payloadUser.userId,
+      url: 'http://10.117.129.194:8080/users/' + payloadUser.userId,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -157,7 +157,7 @@ export default {
 
     var configArticle = {
       method: 'get',
-      url: 'http://localhost:8080/api/articles/',
+      url: 'http://10.117.129.194:8080/api/articles/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
         'X-Server-Select': 'mongo',
@@ -180,7 +180,7 @@ export default {
     });
     var configRestaurant = {
       method: 'get',
-      url: 'http://localhost:8080/api/restaurants/',
+      url: 'http://10.117.129.194:8080/api/restaurants/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
         'X-Server-Select': 'mongo',
@@ -199,7 +199,7 @@ export default {
 
     var config = {
       method: 'get',
-      url: 'http://localhost:8080/api/orders/',
+      url: 'http://10.117.129.194:8080/api/orders/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
         'X-Server-Select': 'mongo',
@@ -207,6 +207,7 @@ export default {
     };
     await axios(config)
       .then(response => {
+        console.log(response.data);
         response.data.orders.forEach(order => {
           var articlesNames = '';
           var priceOrder = 0;
@@ -228,11 +229,12 @@ export default {
           //Get name of the restaurant
           var nameRestaurant = '';
           this.restaurants.forEach(restaurant => {
-            if (restaurant.Id === order.idRestaurant) {
-              nameRestaurant = restaurant.Name;
-            }
+            if (order.idRestaurant != null)
+              if (restaurant.Id === order.idRestaurant._id) {
+                console.log('COUCOU');
+                nameRestaurant = restaurant.Name;
+              }
           });
-
           //Get name of the livreur
           this.orders.push({
             Articles: articleNames,

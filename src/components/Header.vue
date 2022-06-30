@@ -113,7 +113,7 @@ export default {
       const payloadUser = this.decodeToken(user.accessToken);
       var configLog = {
         method: 'post',
-        url: 'http://localhost:8080/api/logs/create',
+        url: 'http://10.117.129.194:8080/api/logs/create',
 
         data: {
           type: 'Deconnexion',
@@ -139,7 +139,7 @@ export default {
     this.userConnectedData = payloadUser;
     var config = {
       method: 'get',
-      url: 'http://localhost:8080/users/' + payloadUser.userId,
+      url: 'http://10.117.129.194:8080/users/' + payloadUser.userId,
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },

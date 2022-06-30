@@ -105,7 +105,7 @@ export default {
       var payloadUser = this.decodeToken(user.accessToken);
       var configDelete = {
         method: 'delete',
-        url: 'http://localhost:8080/users/' + item.id,
+        url: 'http://10.117.129.194:8080/users/' + item.id,
         headers: {
           Authorization: 'Bearer ' + user.accessToken,
         },
@@ -114,7 +114,7 @@ export default {
         .then(() => {
           var configLog = {
             method: 'post',
-            url: 'http://localhost:8080/api/logs/create',
+            url: 'http://10.117.129.194:8080/api/logs/create',
 
             data: {
               type: "Suppression d'un utilisateur",
@@ -155,7 +155,7 @@ export default {
   async created() {
     var configRoles = {
       method: 'get',
-      url: 'http://localhost:8080/roles/',
+      url: 'http://10.117.129.194:8080/roles/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
@@ -170,7 +170,7 @@ export default {
     });
     var config = {
       method: 'get',
-      url: 'http://localhost:8080/users/',
+      url: 'http://10.117.129.194:8080/users/',
       headers: {
         Authorization: 'Bearer ' + user.accessToken,
       },
